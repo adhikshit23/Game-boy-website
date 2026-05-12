@@ -233,7 +233,6 @@ button:hover {
       id="signup-confirm"
       placeholder="Repeat password"
       minlength="8"
-      aria-describedby="password-hint"
       required
     >
 
@@ -249,7 +248,7 @@ button:hover {
   const loginMessage = document.getElementById("login-message");
   const signupMessage = document.getElementById("signup-message");
 
-  const redirectDelayMs = 3000;
+  const redirectDelayMs = 3000; // milliseconds
 
   const setMessage = (target, text, type) => {
     target.textContent = text;

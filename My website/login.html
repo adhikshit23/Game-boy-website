@@ -119,6 +119,13 @@ input:focus {
   border-color: #3b82f6;
 }
 
+.hint {
+  font-size: 12px;
+  opacity: 0.7;
+  margin-top: -10px;
+  margin-bottom: 16px;
+}
+
 /* ===== BUTTON ===== */
 button {
   width: 100%;
@@ -144,6 +151,28 @@ button:hover {
   opacity: 0.7;
   margin-top: 18px;
 }
+
+.message {
+  margin-top: 16px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  font-size: 13px;
+  display: none;
+}
+
+.message.success {
+  display: block;
+  background: rgba(16, 185, 129, 0.18);
+  border: 1px solid rgba(16, 185, 129, 0.35);
+  color: #a7f3d0;
+}
+
+.message.error {
+  display: block;
+  background: rgba(239, 68, 68, 0.18);
+  border: 1px solid rgba(239, 68, 68, 0.35);
+  color: #fecaca;
+}
 </style>
 </head>
 
@@ -167,36 +196,109 @@ button:hover {
   </div>
 
   <!-- LOGIN FORM -->
-  <form class="login-form" action="mainpage.html" method="get">
+  <form class="login-form" id="login-form" action="mainpage.html" method="get">
     <label class="text">Email</label>
-    <input type="email" placeholder="you@example.com" required>
+    <input type="email" id="login-email" placeholder="you@example.com" required>
 
     <label class="text">Password</label>
-    <input type="password" placeholder="••••••••" required>
+    <input type="password" id="login-password" placeholder="••••••••" required>
 
     <button type="submit">Login</button>
     <div class="note">Sign in to sell your gear</div>
+    <p class="message" id="login-message" role="status" aria-live="polite"></p>
   </form>
 
   <!-- SIGN UP FORM -->
-  <form class="signup-form" action="mainpage.html" method="get">
+  <form class="signup-form" id="signup-form" action="mainpage.html" method="get">
     <label class="text">Full Name</label>
-    <input type="text" placeholder="John Doe" required>
+    <input type="text" id="signup-name" placeholder="John Doe" required>
 
     <label class="text">Email</label>
-    <input type="email" placeholder="you@example.com" required>
+    <input type="email" id="signup-email" placeholder="you@example.com" required>
 
     <label class="text">Password</label>
-    <input type="password" placeholder="Create password" required>
+    <input
+      type="password"
+      id="signup-password"
+      placeholder="Create password"
+      minlength="8"
+      aria-describedby="password-hint"
+      required
+    >
+    <div class="hint" id="password-hint">Minimum 8 characters.</div>
 
     <label class="text">Confirm Password</label>
-    <input type="password" placeholder="Repeat password" required>
+    <input
+      type="password"
+      id="signup-confirm"
+      placeholder="Repeat password"
+      minlength="8"
+      required
+    >
 
     <button type="submit">Create Account</button>
     <div class="note">Join Play Boy & start trading</div>
+    <p class="message" id="signup-message" role="status" aria-live="polite"></p>
   </form>
-
 </div>
 
+<script>
+  const loginForm = document.getElementById("login-form");
+  const signupForm = document.getElementById("signup-form");
+  const loginMessage = document.getElementById("login-message");
+  const signupMessage = document.getElementById("signup-message");
+
+  const REDIRECT_DELAY_AFTER_SUCCESS_MS = 3000;
+
+  const runHtmlValidation = (form) => form.reportValidity();
+
+  const setMessage = (target, text, type) => {
+    target.textContent = text;
+    target.className = `message ${type}`;
+  };
+
+  const clearMessages = () => {
+    [loginMessage, signupMessage].forEach((target) => {
+      target.textContent = "";
+      target.className = "message";
+    });
+  };
+
+  loginForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    clearMessages();
+
+    if (!runHtmlValidation(loginForm)) {
+      return;
+    }
+
+    setMessage(loginMessage, "Welcome back! Redirecting...", "success");
+    setTimeout(() => {
+      window.location.href = loginForm.action;
+    }, REDIRECT_DELAY_AFTER_SUCCESS_MS);
+  });
+
+  signupForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    clearMessages();
+
+    if (!runHtmlValidation(signupForm)) {
+      return;
+    }
+
+    const password = document.getElementById("signup-password").value;
+    const confirm = document.getElementById("signup-confirm").value;
+
+    if (password !== confirm) {
+      setMessage(signupMessage, "Passwords do not match. Try again.", "error");
+      return;
+    }
+
+    setMessage(signupMessage, "Account created! Taking you to the store...", "success");
+    setTimeout(() => {
+      window.location.href = signupForm.action;
+    }, REDIRECT_DELAY_AFTER_SUCCESS_MS);
+  });
+</script>
 </body>
 </html>

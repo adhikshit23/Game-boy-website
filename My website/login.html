@@ -228,7 +228,6 @@ button:hover {
   const signupMessage = document.getElementById("signup-message");
 
   const redirectDelayMs = 1500;
-  const minPasswordLength = 8;
 
   const setMessage = (target, text, type) => {
     target.textContent = text;
@@ -266,15 +265,6 @@ button:hover {
 
     const password = document.getElementById("signup-password").value;
     const confirm = document.getElementById("signup-confirm").value;
-
-    if (password.length < minPasswordLength) {
-      setMessage(
-        signupMessage,
-        `Password should be at least ${minPasswordLength} characters.`,
-        "error"
-      );
-      return;
-    }
 
     if (password !== confirm) {
       setMessage(signupMessage, "Passwords do not match. Try again.", "error");

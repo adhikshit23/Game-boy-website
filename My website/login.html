@@ -144,6 +144,28 @@ button:hover {
   opacity: 0.7;
   margin-top: 18px;
 }
+
+.message {
+  margin-top: 16px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  font-size: 13px;
+  display: none;
+}
+
+.message.success {
+  display: block;
+  background: rgba(16, 185, 129, 0.18);
+  border: 1px solid rgba(16, 185, 129, 0.35);
+  color: #a7f3d0;
+}
+
+.message.error {
+  display: block;
+  background: rgba(239, 68, 68, 0.18);
+  border: 1px solid rgba(239, 68, 68, 0.35);
+  color: #fecaca;
+}
 </style>
 </head>
 
@@ -167,36 +189,100 @@ button:hover {
   </div>
 
   <!-- LOGIN FORM -->
-  <form class="login-form" action="mainpage.html" method="get">
+  <form class="login-form" id="login-form" action="mainpage.html" method="get">
     <label class="text">Email</label>
-    <input type="email" placeholder="you@example.com" required>
+    <input type="email" id="login-email" placeholder="you@example.com" required>
 
     <label class="text">Password</label>
-    <input type="password" placeholder="••••••••" required>
+    <input type="password" id="login-password" placeholder="••••••••" required>
 
     <button type="submit">Login</button>
     <div class="note">Sign in to sell your gear</div>
   </form>
 
   <!-- SIGN UP FORM -->
-  <form class="signup-form" action="mainpage.html" method="get">
+  <form class="signup-form" id="signup-form" action="mainpage.html" method="get">
     <label class="text">Full Name</label>
-    <input type="text" placeholder="John Doe" required>
+    <input type="text" id="signup-name" placeholder="John Doe" required>
 
     <label class="text">Email</label>
-    <input type="email" placeholder="you@example.com" required>
+    <input type="email" id="signup-email" placeholder="you@example.com" required>
 
     <label class="text">Password</label>
-    <input type="password" placeholder="Create password" required>
+    <input type="password" id="signup-password" placeholder="Create password" required>
 
     <label class="text">Confirm Password</label>
-    <input type="password" placeholder="Repeat password" required>
+    <input type="password" id="signup-confirm" placeholder="Repeat password" required>
 
     <button type="submit">Create Account</button>
     <div class="note">Join Play Boy & start trading</div>
   </form>
 
+  <p class="message" id="form-message" role="status" aria-live="polite"></p>
 </div>
 
+<script>
+  const loginForm = document.getElementById("login-form");
+  const signupForm = document.getElementById("signup-form");
+  const message = document.getElementById("form-message");
+
+  const setMessage = (text, type) => {
+    message.textContent = text;
+    message.className = `message ${type}`;
+  };
+
+  const clearMessage = () => {
+    message.textContent = "";
+    message.className = "message";
+  };
+
+  loginForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    clearMessage();
+
+    const email = document.getElementById("login-email").value.trim();
+    const password = document.getElementById("login-password").value.trim();
+
+    if (!email || !password) {
+      setMessage("Please enter your email and password.", "error");
+      return;
+    }
+
+    setMessage("Welcome back! Redirecting...", "success");
+    setTimeout(() => {
+      window.location.href = loginForm.action;
+    }, 900);
+  });
+
+  signupForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    clearMessage();
+
+    const name = document.getElementById("signup-name").value.trim();
+    const email = document.getElementById("signup-email").value.trim();
+    const password = document.getElementById("signup-password").value;
+    const confirm = document.getElementById("signup-confirm").value;
+
+    if (!name || !email || !password || !confirm) {
+      setMessage("Please complete all sign up fields.", "error");
+      return;
+    }
+
+    if (password.length < 6) {
+      setMessage("Password should be at least 6 characters.", "error");
+      return;
+    }
+
+    if (password !== confirm) {
+      setMessage("Passwords do not match. Try again.", "error");
+      return;
+    }
+
+    setMessage("Account created! Taking you to the store...", "success");
+    setTimeout(() => {
+      window.location.href = signupForm.action;
+    }, 900);
+  });
+</script>
 </body>
 </html>

@@ -198,6 +198,7 @@ button:hover {
 
     <button type="submit">Login</button>
     <div class="note">Sign in to sell your gear</div>
+    <p class="message" id="login-message" role="status" aria-live="polite"></p>
   </form>
 
   <!-- SIGN UP FORM -->
@@ -209,45 +210,47 @@ button:hover {
     <input type="email" id="signup-email" placeholder="you@example.com" required>
 
     <label class="text">Password</label>
-    <input type="password" id="signup-password" placeholder="Create password" required>
+    <input type="password" id="signup-password" placeholder="Create password" minlength="8" required>
 
     <label class="text">Confirm Password</label>
-    <input type="password" id="signup-confirm" placeholder="Repeat password" required>
+    <input type="password" id="signup-confirm" placeholder="Repeat password" minlength="8" required>
 
     <button type="submit">Create Account</button>
     <div class="note">Join Play Boy & start trading</div>
+    <p class="message" id="signup-message" role="status" aria-live="polite"></p>
   </form>
-
-  <p class="message" id="form-message" role="status" aria-live="polite"></p>
 </div>
 
 <script>
   const loginForm = document.getElementById("login-form");
   const signupForm = document.getElementById("signup-form");
-  const message = document.getElementById("form-message");
+  const loginMessage = document.getElementById("login-message");
+  const signupMessage = document.getElementById("signup-message");
 
   const redirectDelayMs = 1500;
   const minPasswordLength = 8;
 
-  const setMessage = (text, type) => {
-    message.textContent = text;
-    message.className = `message ${type}`;
+  const setMessage = (target, text, type) => {
+    target.textContent = text;
+    target.className = `message ${type}`;
   };
 
-  const clearMessage = () => {
-    message.textContent = "";
-    message.className = "message";
+  const clearMessages = () => {
+    [loginMessage, signupMessage].forEach((target) => {
+      target.textContent = "";
+      target.className = "message";
+    });
   };
 
   loginForm.addEventListener("submit", (event) => {
     event.preventDefault();
-    clearMessage();
+    clearMessages();
 
     if (!loginForm.reportValidity()) {
       return;
     }
 
-    setMessage("Welcome back! Redirecting...", "success");
+    setMessage(loginMessage, "Welcome back! Redirecting...", "success");
     setTimeout(() => {
       window.location.href = loginForm.action;
     }, redirectDelayMs);
@@ -255,7 +258,7 @@ button:hover {
 
   signupForm.addEventListener("submit", (event) => {
     event.preventDefault();
-    clearMessage();
+    clearMessages();
 
     if (!signupForm.reportValidity()) {
       return;
@@ -265,16 +268,20 @@ button:hover {
     const confirm = document.getElementById("signup-confirm").value;
 
     if (password.length < minPasswordLength) {
-      setMessage(`Password should be at least ${minPasswordLength} characters.`, "error");
+      setMessage(
+        signupMessage,
+        `Password should be at least ${minPasswordLength} characters.`,
+        "error"
+      );
       return;
     }
 
     if (password !== confirm) {
-      setMessage("Passwords do not match. Try again.", "error");
+      setMessage(signupMessage, "Passwords do not match. Try again.", "error");
       return;
     }
 
-    setMessage("Account created! Taking you to the store...", "success");
+    setMessage(signupMessage, "Account created! Taking you to the store...", "success");
     setTimeout(() => {
       window.location.href = signupForm.action;
     }, redirectDelayMs);

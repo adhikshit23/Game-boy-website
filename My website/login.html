@@ -248,7 +248,9 @@ button:hover {
   const loginMessage = document.getElementById("login-message");
   const signupMessage = document.getElementById("signup-message");
 
-  const redirectDelayMs = 3000;
+  const REDIRECT_DELAY_AFTER_SUCCESS_MS = 3000;
+
+  const runHtmlValidation = (form) => form.reportValidity();
 
   const setMessage = (target, text, type) => {
     target.textContent = text;
@@ -266,21 +268,21 @@ button:hover {
     event.preventDefault();
     clearMessages();
 
-    if (!loginForm.reportValidity()) {
+    if (!runHtmlValidation(loginForm)) {
       return;
     }
 
     setMessage(loginMessage, "Welcome back! Redirecting...", "success");
     setTimeout(() => {
       window.location.href = loginForm.action;
-    }, redirectDelayMs);
+    }, REDIRECT_DELAY_AFTER_SUCCESS_MS);
   });
 
   signupForm.addEventListener("submit", (event) => {
     event.preventDefault();
     clearMessages();
 
-    if (!signupForm.reportValidity()) {
+    if (!runHtmlValidation(signupForm)) {
       return;
     }
 
@@ -295,7 +297,7 @@ button:hover {
     setMessage(signupMessage, "Account created! Taking you to the store...", "success");
     setTimeout(() => {
       window.location.href = signupForm.action;
-    }, redirectDelayMs);
+    }, REDIRECT_DELAY_AFTER_SUCCESS_MS);
   });
 </script>
 </body>

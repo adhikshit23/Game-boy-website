@@ -242,13 +242,12 @@ button:hover {
     event.preventDefault();
     clearMessage();
 
-    const email = document.getElementById("login-email").value.trim();
-    const password = document.getElementById("login-password").value.trim();
-
-    if (!email || !password) {
-      setMessage("Please enter your email and password.", "error");
+    if (!loginForm.reportValidity()) {
       return;
     }
+
+    const email = document.getElementById("login-email").value.trim();
+    const password = document.getElementById("login-password").value.trim();
 
     setMessage("Welcome back! Redirecting...", "success");
     setTimeout(() => {
@@ -260,15 +259,14 @@ button:hover {
     event.preventDefault();
     clearMessage();
 
+    if (!signupForm.reportValidity()) {
+      return;
+    }
+
     const name = document.getElementById("signup-name").value.trim();
     const email = document.getElementById("signup-email").value.trim();
     const password = document.getElementById("signup-password").value.trim();
     const confirm = document.getElementById("signup-confirm").value.trim();
-
-    if (!name || !email || !password || !confirm) {
-      setMessage("Please complete all sign up fields.", "error");
-      return;
-    }
 
     if (password.length < 8) {
       setMessage("Password should be at least 8 characters.", "error");

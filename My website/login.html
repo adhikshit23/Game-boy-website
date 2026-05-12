@@ -119,6 +119,13 @@ input:focus {
   border-color: #3b82f6;
 }
 
+.hint {
+  font-size: 12px;
+  opacity: 0.7;
+  margin-top: -10px;
+  margin-bottom: 16px;
+}
+
 /* ===== BUTTON ===== */
 button {
   width: 100%;
@@ -210,10 +217,25 @@ button:hover {
     <input type="email" id="signup-email" placeholder="you@example.com" required>
 
     <label class="text">Password</label>
-    <input type="password" id="signup-password" placeholder="Create password" minlength="8" required>
+    <input
+      type="password"
+      id="signup-password"
+      placeholder="Create password"
+      minlength="8"
+      aria-describedby="password-hint"
+      required
+    >
+    <div class="hint" id="password-hint">Minimum 8 characters.</div>
 
     <label class="text">Confirm Password</label>
-    <input type="password" id="signup-confirm" placeholder="Repeat password" minlength="8" required>
+    <input
+      type="password"
+      id="signup-confirm"
+      placeholder="Repeat password"
+      minlength="8"
+      aria-describedby="password-hint"
+      required
+    >
 
     <button type="submit">Create Account</button>
     <div class="note">Join Play Boy & start trading</div>
@@ -227,7 +249,7 @@ button:hover {
   const loginMessage = document.getElementById("login-message");
   const signupMessage = document.getElementById("signup-message");
 
-  const redirectDelayMs = 1500;
+  const redirectDelayMs = 3000;
 
   const setMessage = (target, text, type) => {
     target.textContent = text;

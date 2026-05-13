@@ -126,7 +126,7 @@
       const username = usernameInput.value.trim();
       const password = passwordInput.value.trim();
 
-      if (username === "" || password === "") {
+      if (!username || !password) {
         messageElement.textContent = "Please fill all fields.";
         messageElement.style.color = "red";
         return;
@@ -147,7 +147,7 @@
         return;
       }
 
-      messageElement.textContent = "Login successful! (Demo only, no redirect)";
+      messageElement.textContent = "Login successful! This is a demo - no actual authentication performed.";
       messageElement.style.color = "green";
     });
   </script>

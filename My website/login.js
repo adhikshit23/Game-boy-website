@@ -54,6 +54,13 @@ if (loginForm) {
       }
       return;
     }
+    if (emailValue.indexOf("@") === -1 || emailValue.indexOf(".") === -1) {
+      alert("Please enter a valid email address.");
+      if (noteText) {
+        noteText.textContent = defaultNote;
+      }
+      return;
+    }
 
     var foundUser = tools.findUserByEmail(emailValue, users);
     var invalidMessage = "Invalid email or password.";

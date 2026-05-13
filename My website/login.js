@@ -1,5 +1,5 @@
-// Simple dummy users for practice (not real accounts)
-// In real apps, passwords are hashed on the server
+// Simple dummy users for practice (education only, not real accounts)
+// In real apps, passwords are hashed on the server and not kept in JS
 var users = [
   { email: "gamer@playboy.com", password: "game123", name: "Rohan" },
   { email: "player@playboy.com", password: "play456", name: "Aisha" },
@@ -54,7 +54,9 @@ if (loginForm) {
       }
       return;
     }
-    if (emailValue.indexOf("@") === -1 || emailValue.indexOf(".") === -1) {
+    var atPos = emailValue.indexOf("@");
+    var dotPos = emailValue.lastIndexOf(".");
+    if (atPos < 1 || dotPos < atPos + 2 || dotPos === emailValue.length - 1) {
       alert("Please enter a valid email address.");
       if (noteText) {
         noteText.textContent = defaultNote;

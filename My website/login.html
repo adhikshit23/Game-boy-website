@@ -1,202 +1,136 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Login / Sign Up | Play Boy</title>
-<link rel="icon" type="image/png" href="81c1d0412d8991a3ae21e2a3d37c46ab.jpg">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Basic Login | Play Boy</title>
+  <link rel="icon" type="image/png" href="81c1d0412d8991a3ae21e2a3d37c46ab.jpg">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2f2f2;
+      margin: 0;
+      padding: 0;
+    }
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    .login-box {
+      width: 320px;
+      margin: 80px auto;
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      padding: 20px;
+    }
 
-<style>
-* { box-sizing: border-box; margin: 0; padding: 0; }
+    h1 {
+      font-size: 20px;
+      text-align: center;
+      margin-bottom: 16px;
+    }
 
-body {
-  font-family: "Poppins", sans-serif;
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background:
-    radial-gradient(900px circle at 80% -10%, rgba(59,130,246,0.35), transparent 60%),
-    radial-gradient(600px circle at -10% 60%, rgba(59,130,246,0.18), transparent 60%),
-    #05070c;
-  color: #e5e7eb;
-}
+    label {
+      display: block;
+      margin-top: 12px;
+      font-size: 14px;
+    }
 
-/* ===== CARD ===== */
-.auth-box {
-  width: 100%;
-  max-width: 460px;
-  background: rgba(10,16,32,0.9);
-  border-radius: 18px;
-  border: 1px solid rgba(255,255,255,0.08);
-  padding: 34px;
-  backdrop-filter: blur(14px);
-  box-shadow: 0 30px 60px rgba(0,0,0,0.6);
-}
+    input {
+      width: 100%;
+      padding: 8px;
+      margin-top: 6px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
 
-/* ===== LOGO ===== */
-.logo {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 22px;
-}
+    button {
+      width: 100%;
+      margin-top: 16px;
+      padding: 10px;
+      border: none;
+      background: #2f6fed;
+      color: #fff;
+      border-radius: 4px;
+      cursor: pointer;
+    }
 
-.logo img {
-  height: 52px;
-  object-fit: contain;
-  filter: drop-shadow(0 0 12px rgba(59,130,246,0.45));
-}
+    .message {
+      margin-top: 14px;
+      font-size: 14px;
+      text-align: center;
+    }
 
-/* ===== TABS ===== */
-.tabs {
-  display: flex;
-  background: rgba(255,255,255,0.05);
-  border-radius: 12px;
-  overflow: hidden;
-  margin-bottom: 28px;
-}
-
-.tabs label {
-  flex: 1;
-  text-align: center;
-  padding: 12px;
-  cursor: pointer;
-  font-size: 14px;
-  opacity: 0.6;
-  transition: 0.3s;
-}
-
-input[type="radio"] {
-  display: none;
-}
-
-#login:checked ~ .tabs label[for="login"],
-#signup:checked ~ .tabs label[for="signup"] {
-  background: linear-gradient(135deg, #3b82f6, #60a5fa);
-  opacity: 1;
-  font-weight: 600;
-}
-
-/* ===== FORMS ===== */
-form {
-  display: none;
-  animation: fade 0.4s ease;
-}
-
-#login:checked ~ .login-form {
-  display: block;
-}
-
-#signup:checked ~ .signup-form {
-  display: block;
-}
-
-@keyframes fade {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-label.text {
-  font-size: 13px;
-  opacity: 0.85;
-}
-
-input {
-  width: 100%;
-  margin-top: 6px;
-  margin-bottom: 18px;
-  padding: 12px 14px;
-  border-radius: 10px;
-  border: 1px solid rgba(255,255,255,0.1);
-  background: rgba(255,255,255,0.05);
-  color: #fff;
-  outline: none;
-}
-
-input:focus {
-  border-color: #3b82f6;
-}
-
-/* ===== BUTTON ===== */
-button {
-  width: 100%;
-  padding: 14px;
-  border: none;
-  border-radius: 12px;
-  font-weight: 600;
-  font-size: 15px;
-  color: #fff;
-  background: linear-gradient(135deg, #3b82f6, #60a5fa);
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 30px rgba(59,130,246,0.45);
-}
-
-.note {
-  text-align: center;
-  font-size: 13px;
-  opacity: 0.7;
-  margin-top: 18px;
-}
-</style>
+    .hint {
+      margin-top: 12px;
+      font-size: 12px;
+      color: #555;
+      text-align: center;
+    }
+  </style>
 </head>
-
 <body>
+  <div class="login-box">
+    <h1>Login</h1>
+    <form id="loginForm">
+      <label for="username">Username</label>
+      <input id="username" type="text" placeholder="student" required>
 
-<div class="auth-box">
+      <label for="password">Password</label>
+      <input id="password" type="password" placeholder="1234" required>
 
-  <!-- LOGO -->
-  <div class="logo">
-    <img src="logo.png" alt="Play Boy Logo">
+      <button type="submit">Login</button>
+      <div id="message" class="message"></div>
+    </form>
+    <div class="hint">Demo users: student/1234 or player/5678</div>
   </div>
 
-  <!-- RADIO CONTROLS -->
-  <input type="radio" name="tab" id="login" checked>
-  <input type="radio" name="tab" id="signup">
+  <script>
+    const rawUsers = [
+      { name: "student", pass: "1234" },
+      { name: "player", pass: "5678" }
+    ];
 
-  <!-- TABS -->
-  <div class="tabs">
-    <label for="login">Login</label>
-    <label for="signup">Sign Up</label>
-  </div>
+    const users = rawUsers.map(function (item) {
+      return {
+        name: item.name,
+        password: item.pass,
+        checkPassword: function (inputPassword) {
+          return this.password === inputPassword;
+        }
+      };
+    });
 
-  <!-- LOGIN FORM -->
-  <form class="login-form" action="mainpage.html" method="get">
-    <label class="text">Email</label>
-    <input type="email" placeholder="you@example.com" required>
+    const formPointer = document.getElementById("loginForm");
+    const usernamePointer = document.getElementById("username");
+    const passwordPointer = document.getElementById("password");
+    const messagePointer = document.getElementById("message");
 
-    <label class="text">Password</label>
-    <input type="password" placeholder="••••••••" required>
+    formPointer.addEventListener("submit", function (event) {
+      event.preventDefault();
 
-    <button type="submit">Login</button>
-    <div class="note">Sign in to sell your gear</div>
-  </form>
+      const username = usernamePointer.value.trim();
+      const password = passwordPointer.value.trim();
 
-  <!-- SIGN UP FORM -->
-  <form class="signup-form" action="mainpage.html" method="get">
-    <label class="text">Full Name</label>
-    <input type="text" placeholder="John Doe" required>
+      if (username === "" || password === "") {
+        messagePointer.textContent = "Please fill all fields.";
+        messagePointer.style.color = "red";
+        return;
+      }
 
-    <label class="text">Email</label>
-    <input type="email" placeholder="you@example.com" required>
+      const foundUser = users.find(function (user) {
+        return user.name === username;
+      });
 
-    <label class="text">Password</label>
-    <input type="password" placeholder="Create password" required>
-
-    <label class="text">Confirm Password</label>
-    <input type="password" placeholder="Repeat password" required>
-
-    <button type="submit">Create Account</button>
-    <div class="note">Join Play Boy & start trading</div>
-  </form>
-
-</div>
-
+      if (foundUser && foundUser.checkPassword(password)) {
+        messagePointer.textContent = "Login successful! Redirecting...";
+        messagePointer.style.color = "green";
+        setTimeout(function () {
+          window.location.href = "mainpage.html";
+        }, 800);
+      } else {
+        messagePointer.textContent = "Invalid username or password.";
+        messagePointer.style.color = "red";
+      }
+    });
+  </script>
 </body>
 </html>

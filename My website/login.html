@@ -87,21 +87,21 @@
   <script>
     const loginRules = [
       {
-        name: "Username 3+ characters",
+        ruleName: "Username 3+ characters",
         message: "Username must be at least 3 characters.",
         check: function (data) {
           return data.username.length >= 3;
         }
       },
       {
-        name: "Password 4+ characters",
+        ruleName: "Password 4+ characters",
         message: "Password must be at least 4 characters.",
         check: function (data) {
           return data.password.length >= 4;
         }
       },
       {
-        name: "Password has a number",
+        ruleName: "Password has a number",
         message: "Password must include a number.",
         check: function (data) {
           return /\d/.test(data.password);
@@ -115,10 +115,9 @@
     const messageElement = document.getElementById("message");
     const ruleHintElement = document.getElementById("ruleHint");
 
-    const ruleNames = loginRules.map(function (rule) {
-      return rule.name;
-    });
-    ruleHintElement.textContent = "Rules: " + ruleNames.join(", ");
+    ruleHintElement.textContent = "Rules: " + loginRules.map(function (rule) {
+      return rule.ruleName;
+    }).join(", ");
 
     formElement.addEventListener("submit", function (event) {
       event.preventDefault();

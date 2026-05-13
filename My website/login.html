@@ -94,6 +94,14 @@
         }
       },
       {
+        ruleName: "Only letters and numbers",
+        message: "Use only letters and numbers.",
+        check: function (data) {
+          const safePattern = /^[a-z0-9]+$/i;
+          return safePattern.test(data.username) && safePattern.test(data.password);
+        }
+      },
+      {
         ruleName: "Password 4+ characters",
         message: "Password must be at least 4 characters.",
         check: function (data) {
@@ -146,7 +154,7 @@
         return;
       }
 
-      messageElement.textContent = "Login successful! This is a demo - no actual authentication performed.";
+      messageElement.textContent = "Login successful!";
       messageElement.style.color = "green";
     });
   </script>

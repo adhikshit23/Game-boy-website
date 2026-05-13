@@ -1,5 +1,5 @@
 // Simple dummy users for practice (not real accounts)
-// Never store real passwords like this in a real app
+// In real apps, passwords are hashed on the server
 var users = [
   { email: "gamer@playboy.com", password: "game123", name: "Rohan" },
   { email: "player@playboy.com", password: "play456", name: "Aisha" },
@@ -56,9 +56,10 @@ if (loginForm) {
     }
 
     var foundUser = tools.findUserByEmail(emailValue, users);
+    var invalidMessage = "Invalid email or password.";
 
     if (!foundUser) {
-      alert("No account found for this email.");
+      alert(invalidMessage);
       if (noteText) {
         noteText.textContent = defaultNote;
       }
@@ -66,7 +67,7 @@ if (loginForm) {
     }
 
     if (!tools.isPasswordMatch(foundUser, passwordValue)) {
-      alert("Wrong password. Please try again.");
+      alert(invalidMessage);
       if (noteText) {
         noteText.textContent = defaultNote;
       }

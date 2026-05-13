@@ -1,4 +1,5 @@
-// Simple dummy users for practice
+// Simple dummy users for practice (not real accounts)
+// Never store real passwords like this in a real app
 var users = [
   { email: "gamer@playboy.com", password: "game123", name: "Rohan" },
   { email: "player@playboy.com", password: "play456", name: "Aisha" },

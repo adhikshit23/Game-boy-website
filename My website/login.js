@@ -54,9 +54,9 @@ if (loginForm) {
       }
       return;
     }
-    var atPos = emailValue.indexOf("@");
-    var dotPos = emailValue.lastIndexOf(".");
-    if (atPos < 1 || dotPos < atPos + 2 || dotPos === emailValue.length - 1) {
+    var atSymbolPosition = emailValue.indexOf("@");
+    var dotPosition = emailValue.lastIndexOf(".");
+    if (atSymbolPosition < 1 || dotPosition < atSymbolPosition + 2 || dotPosition === emailValue.length - 1) {
       alert("Please enter a valid email address.");
       if (noteText) {
         noteText.textContent = defaultNote;

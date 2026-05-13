@@ -80,56 +80,77 @@
       <button type="submit">Login</button>
       <div id="message" class="message"></div>
     </form>
-    <div class="hint">Demo users: student/1234 or player/5678</div>
+    <div id="ruleHint" class="hint"></div>
   </div>
 
   <script>
-    const rawUsers = [
-      { name: "student", pass: "1234" },
-      { name: "player", pass: "5678" }
+    const loginRules = [
+      {
+        name: "Username 3+ chars",
+        message: "Username must be at least 3 characters.",
+        check: function (data) {
+          return data.username.length >= 3;
+        }
+      },
+      {
+        name: "Password 4+ chars",
+        message: "Password must be at least 4 characters.",
+        check: function (data) {
+          return data.password.length >= 4;
+        }
+      },
+      {
+        name: "Password has a number",
+        message: "Password must include a number.",
+        check: function (data) {
+          return /\d/.test(data.password);
+        }
+      }
     ];
 
-    const users = rawUsers.map(function (item) {
-      return {
-        name: item.name,
-        password: item.pass,
-        checkPassword: function (inputPassword) {
-          return this.password === inputPassword;
-        }
-      };
+    const formElement = document.getElementById("loginForm");
+    const usernameInput = document.getElementById("username");
+    const passwordInput = document.getElementById("password");
+    const messageElement = document.getElementById("message");
+    const ruleHintElement = document.getElementById("ruleHint");
+
+    const ruleNames = loginRules.map(function (rule) {
+      return rule.name;
     });
+    ruleHintElement.textContent = "Rules: " + ruleNames.join(", ");
 
-    const formPointer = document.getElementById("loginForm");
-    const usernamePointer = document.getElementById("username");
-    const passwordPointer = document.getElementById("password");
-    const messagePointer = document.getElementById("message");
-
-    formPointer.addEventListener("submit", function (event) {
+    formElement.addEventListener("submit", function (event) {
       event.preventDefault();
 
-      const username = usernamePointer.value.trim();
-      const password = passwordPointer.value.trim();
+      const username = usernameInput.value.trim();
+      const password = passwordInput.value.trim();
 
       if (username === "" || password === "") {
-        messagePointer.textContent = "Please fill all fields.";
-        messagePointer.style.color = "red";
+        messageElement.textContent = "Please fill all fields.";
+        messageElement.style.color = "red";
         return;
       }
 
-      const foundUser = users.find(function (user) {
-        return user.name === username;
+      const loginData = {
+        username: username,
+        password: password
+      };
+
+      const failedRule = loginRules.find(function (rule) {
+        return !rule.check(loginData);
       });
 
-      if (foundUser && foundUser.checkPassword(password)) {
-        messagePointer.textContent = "Login successful! Redirecting...";
-        messagePointer.style.color = "green";
-        setTimeout(function () {
-          window.location.href = "mainpage.html";
-        }, 800);
-      } else {
-        messagePointer.textContent = "Invalid username or password.";
-        messagePointer.style.color = "red";
+      if (failedRule) {
+        messageElement.textContent = failedRule.message;
+        messageElement.style.color = "red";
+        return;
       }
+
+      messageElement.textContent = "Login successful! Redirecting...";
+      messageElement.style.color = "green";
+      setTimeout(function () {
+        window.location.href = "mainpage.html";
+      }, 800);
     });
   </script>
 </body>

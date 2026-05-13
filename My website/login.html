@@ -72,15 +72,16 @@
     <h1>Login</h1>
     <form id="loginForm">
       <label for="username">Username</label>
-      <input id="username" type="text" placeholder="student" required>
+      <input id="username" type="text" placeholder="Enter username">
 
       <label for="password">Password</label>
-      <input id="password" type="password" placeholder="1234" required>
+      <input id="password" type="password" placeholder="Enter password">
 
       <button type="submit">Login</button>
       <div id="message" class="message"></div>
     </form>
     <div id="ruleHint" class="hint"></div>
+    <div class="hint"><a href="mainpage.html">Go to main page</a></div>
   </div>
 
   <script>
@@ -146,11 +147,8 @@
         return;
       }
 
-      messageElement.textContent = "Login successful! Redirecting...";
+      messageElement.textContent = "Login successful! (Demo only)";
       messageElement.style.color = "green";
-      setTimeout(function () {
-        window.location.href = "mainpage.html";
-      }, 800);
     });
   </script>
 </body>

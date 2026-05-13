@@ -65,6 +65,13 @@
       color: #555;
       text-align: center;
     }
+
+    .hint-list {
+      margin-top: 12px;
+      padding-left: 20px;
+      font-size: 12px;
+      color: #555;
+    }
   </style>
 </head>
 <body>
@@ -72,15 +79,15 @@
     <h1>Login</h1>
     <form id="loginForm">
       <label for="username">Username</label>
-      <input id="username" type="text" placeholder="Enter username">
+      <input id="username" type="text" placeholder="Enter username" required>
 
       <label for="password">Password</label>
-      <input id="password" type="password" placeholder="Enter password">
+      <input id="password" type="password" placeholder="Enter password" required>
 
       <button type="submit">Login</button>
       <div id="message" class="message"></div>
     </form>
-    <div id="ruleHint" class="hint"></div>
+    <ul id="ruleList" class="hint-list"></ul>
     <div class="hint">Demo only. No real authentication.</div>
   </div>
 
@@ -94,11 +101,19 @@
         }
       },
       {
-        ruleName: "Only letters and numbers",
-        message: "Use only letters and numbers.",
+        ruleName: "Username: letters and numbers only",
+        message: "Username can only use letters and numbers.",
         check: function (data) {
           const safePattern = /^[a-z0-9]+$/i;
-          return safePattern.test(data.username) && safePattern.test(data.password);
+          return safePattern.test(data.username);
+        }
+      },
+      {
+        ruleName: "Password: letters and numbers only",
+        message: "Password can only use letters and numbers.",
+        check: function (data) {
+          const safePattern = /^[a-z0-9]+$/i;
+          return safePattern.test(data.password);
         }
       },
       {
@@ -121,23 +136,19 @@
     const usernameInput = document.getElementById("username");
     const passwordInput = document.getElementById("password");
     const messageElement = document.getElementById("message");
-    const ruleHintElement = document.getElementById("ruleHint");
+    const ruleListElement = document.getElementById("ruleList");
 
-    ruleHintElement.textContent = "Rules: " + loginRules.map(function (rule) {
-      return rule.ruleName;
-    }).join(", ");
+    loginRules.forEach(function (rule) {
+      const listItem = document.createElement("li");
+      listItem.textContent = rule.ruleName;
+      ruleListElement.appendChild(listItem);
+    });
 
     formElement.addEventListener("submit", function (event) {
       event.preventDefault();
 
       const username = usernameInput.value.trim();
       const password = passwordInput.value.trim();
-
-      if (!username || !password) {
-        messageElement.textContent = "Please fill all fields.";
-        messageElement.style.color = "red";
-        return;
-      }
 
       const loginData = {
         username: username,

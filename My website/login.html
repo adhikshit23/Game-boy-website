@@ -92,7 +92,7 @@
   </div>
 
   <script>
-    const safePattern = /^[a-z0-9]+$/i;
+    const usernamePattern = /^[a-z0-9]+$/i;
     const loginRules = [
       {
         ruleName: "Username 3+ characters",
@@ -105,21 +105,14 @@
         ruleName: "Username: letters and numbers only",
         message: "Username can only use letters and numbers.",
         check: function (data) {
-          return safePattern.test(data.username);
+          return usernamePattern.test(data.username);
         }
       },
       {
-        ruleName: "Password: letters and numbers only",
-        message: "Password can only use letters and numbers.",
+        ruleName: "Password 8+ characters",
+        message: "Password must be at least 8 characters.",
         check: function (data) {
-          return safePattern.test(data.password);
-        }
-      },
-      {
-        ruleName: "Password 4+ characters",
-        message: "Password must be at least 4 characters.",
-        check: function (data) {
-          return data.password.length >= 4;
+          return data.password.length >= 8;
         }
       }
     ];
@@ -140,7 +133,7 @@
       event.preventDefault();
 
       const username = usernameInput.value.trim();
-      const password = passwordInput.value;
+      const password = passwordInput.value.trim();
 
       const loginData = {
         username: username,
